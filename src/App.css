@@ -22,7 +22,10 @@ body {
   align-items: center;
 }
 
-.app-header h1, .app-header h2 {
+.app-header h1{
+  color: #004AAD;
+}
+.app-header h2{
   color: #004AAD;
 }
 
@@ -133,6 +136,7 @@ body {
   margin: 15px;
   text-align: center;
   margin-top: 30px;
+
 }
 
 .forecast-item p {
@@ -234,7 +238,6 @@ body {
 .dark-mode .search-bar button {
   background: linear-gradient(to bottom, #007bff, #0056b3);
   color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .dark-mode .search-bar button:hover {
@@ -244,14 +247,11 @@ body {
 .dark-mode .view-switch button {
   background-color: transparent;
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .dark-mode .view-switch button:hover {
-  background-color: #e3a94c;
+  background-color: #e3a94c;;
   color: white;
 }
-
 .dark-mode .weather-display {
   color: #ffffff;
 }
@@ -259,23 +259,15 @@ body {
 .dark-mode .location-popup {
   background-color: #1e1e1e;
   border: 1px solid #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .dark-mode .location-popup button {
   background: linear-gradient(to bottom, #007bff, #0056b3);
   color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .dark-mode .forecast-item img {
   filter: brightness(0) invert(1);
-}
-
-.dark-mode .get-alert-button {
-  background: linear-gradient(to bottom, #F4C561, #e3a94c);
-  color: #241D10;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .dark-mode .get-alert-button:hover {
@@ -317,4 +309,39 @@ body {
 
 .dark-mode .app-sms button.submit-button:hover {
   background: linear-gradient(to bottom, #033a75, #002a60);
+}
+
+@media (max-width: 430px) {
+  .header button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .view-switch button {
+    padding: 8px 14px;
+    font-size: 10px;
+  }
+
+  .location-popup button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .search-bar input {
+    font-size: 14px;
+  }
+
+  .search-bar button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .forecast-item {
+    margin: 5px;
+  }
+
+  .forecast-item img {
+    width: 40px;
+    height: 40px;
+  }
 }
