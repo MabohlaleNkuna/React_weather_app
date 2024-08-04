@@ -1,4 +1,4 @@
-// server.js
+
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
@@ -8,10 +8,10 @@ const port = 5000;
 app.use(express.json());
 app.use(cors());
 
-const db = new sqlite3.Database(':memory:'); // Use a persistent file database for production
+const db = new sqlite3.Database('weather.db'); 
 
 db.serialize(() => {
-  db.run("CREATE TABLE weather (id INTEGER PRIMARY KEY AUTOINCREMENT, location TEXT, temperature TEXT, main TEXT, icon TEXT, date TEXT)");
+  db.run("CREATE TABLE IF NOT EXISTS weather (id INTEGER PRIMARY KEY AUTOINCREMENT, location TEXT, temperature TEXT, main TEXT, icon TEXT, date TEXT)");
 
   const stmt = db.prepare("INSERT INTO weather (location, temperature, main, icon, date) VALUES (?, ?, ?, ?, ?)");
   stmt.run("Sample Location", "22°C", "Clear", "http://example.com/icon.png", new Date().toLocaleDateString());
