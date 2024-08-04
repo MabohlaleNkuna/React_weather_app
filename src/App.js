@@ -11,19 +11,19 @@ const App = () => {
   const [forecast, setForecast] = useState([]);
   const [main, setMain] = useState('');
   const [img, setImg] = useState('');
-  const [unit, setUnit] = useState('metric'); // 'metric' for Celsius, 'imperial' for Fahrenheit
+  const [humidity, setHumidity] = useState(''); 
+  const [windSpeed, setWindSpeed] = useState(''); 
+  const [unit, setUnit] = useState('metric');
   const [viewType, setViewType] = useState('daily');
   const [searchQuery, setSearchQuery] = useState('');
   const [showLocationPopup, setShowLocationPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Convert temperature based on unit
   const temperatureConverter = (temp, unit) => {
     return unit === 'imperial' ? Math.round(temp * 9 / 5 + 32) : Math.round(temp);
   };
 
-  // Handle weather data response
   const handleWeatherResponse = useCallback((res) => {
     const data = res.data;
     const temp = temperatureConverter(data.main.temp, unit);
@@ -33,8 +33,9 @@ const App = () => {
     setDegree(temp);
     setMain(data.weather[0].main);
     setImg(imgSource);
+    setHumidity(data.main.humidity);
+    setWindSpeed(data.wind.speed); 
 
-    // Fetch forecast data
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?appid=b8a29f5c70c06239c55aedb78e5614f0&units=${unit}&q=${data.name}`;
     axios.get(forecastUrl).then(res => {
       let weatherList = [];
@@ -77,7 +78,6 @@ const App = () => {
     });
   }, [unit]);
 
-  // Fetch weather data based on query or geolocation
   const fetchWeatherData = useCallback((query = '') => {
     let url;
 
@@ -108,14 +108,11 @@ const App = () => {
     }
   }, [unit, handleWeatherResponse]);
 
-  // Effect to fetch weather data on mount or dependency change
   useEffect(() => {
-    // Request user location on initial render
     const requestUserLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           () => {
-            // If location is granted, proceed with fetching weather data
             fetchWeatherData();
           },
           (error) => {
@@ -135,20 +132,17 @@ const App = () => {
     requestUserLocation();
   }, [fetchWeatherData]);
 
-  // Confirm location access and retry fetching weather data
   const handlePopupConfirm = () => {
     setShowLocationPopup(false);
     fetchWeatherData();
   };
 
-  // Deny location access and allow manual location entry
   const handlePopupDeny = () => {
     setShowLocationPopup(false);
     setPopupMessage('');
     document.querySelector('.search-bar input').focus();
   };
 
-  // Handle search form submission
   const handleSearch = (e) => {
     e.preventDefault();
     fetchWeatherData(searchQuery);
@@ -183,6 +177,8 @@ const App = () => {
         main={main}
         forecast={forecast}
         img={img}
+        humidity={humidity} 
+        windSpeed={windSpeed} 
         viewType={viewType}
         unit={unit}
       />
