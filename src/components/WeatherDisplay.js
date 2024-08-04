@@ -2,9 +2,15 @@ import React from 'react';
 import ForecastItem from './ForecastItem';
 
 const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, viewType, unit }) => {
+ 
+  const getCurrentDate = () => {
+    const today = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return today.toLocaleDateString(undefined, options);
+  };
+
   const displayForecast = (forecast) => {
     if (viewType === 'daily') {
-    
       const dailyForecasts = forecast.filter((item, index) => index % 8 === 0);
       return dailyForecasts.map((item, index) => (
         <ForecastItem
@@ -37,7 +43,8 @@ const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, view
         <div className="humidity">Humidity: {humidity}%</div>
         <div className="wind-speed">Wind Speed: {windSpeed} {unit === 'metric' ? 'm/s' : 'mph'}</div>
       </div>
-      <div className="description">{main}</div>
+      
+      <div className="date">{getCurrentDate()}</div>
       <div className="forecast">
         {displayForecast(forecast)}
       </div>

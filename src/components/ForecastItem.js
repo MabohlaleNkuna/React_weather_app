@@ -1,12 +1,13 @@
 import React from 'react';
 
+
 const ForecastItem = ({ hour, temp, description, img }) => {
   return (
     <div className="forecast-item">
-      <p>{hour}</p>
+      <p className="hour">{hour}</p>
       <img src={img} alt={description} />
-      <p>{temp}°</p>
-      <p>{description}</p>
+      <p className="temp">{temp}°</p>
+      <p className="description">{description}</p>
     </div>
   );
 };
