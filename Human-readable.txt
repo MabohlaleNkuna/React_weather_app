@@ -1,0 +1,88 @@
+Weather App Description
+
+1. Initial Setup
+- Load necessary styles and scripts.
+- Include external fonts from Google Fonts.
+
+2. Body Structure
+- App Container
+  - This is the main container that holds everything in the app.
+  - It has a max width for responsiveness and is centered.
+
+3. Header Section
+- Title
+  - Displays the main title of the app.
+- Dark Mode Toggle Button
+  - A button to switch between light and dark modes.
+
+4. Search Bar
+- Input Field
+  - Allows the user to enter a location for weather search.
+- Search Button
+  - Triggers the search function to fetch weather data based on the entered location.
+
+5. View Switch
+- Hourly View Button
+  - Switches the display to show hourly weather forecasts.
+- Daily View Button
+  - Switches the display to show daily weather forecasts.
+
+6. Weather Display
+- Weather Icon
+  - Displays an icon representing the current weather condition.
+- Temperature Display
+  - Shows the current temperature.
+- Weather Description
+  - Displays a description of the current weather.
+
+7. Forecast Section
+- Forecast Items
+  - Displays forecast information in a flexible grid, showing icons and temperatures for upcoming hours or days.
+
+8. Location Popup
+- Popup Window
+  - Shows a popup for selecting or confirming location-related information.
+- Popup Buttons
+  - Confirm Button
+    - Confirms the location selection.
+  - Cancel Button
+    - Closes the popup without any action.
+
+9. Alert Button
+- Weather Alert Button
+  - Triggers weather alerts for severe weather conditions.
+
+10. Dark Mode Styling
+- Background and Text Color
+  - Changes the app's background and text colors to darker shades for better visibility in low light.
+- Button Styles
+  - Adjusts button colors and hover effects for dark mode.
+
+11. Responsiveness
+- Styles for Small Screens (Below 430px)
+  - Adjusts font sizes, padding, and image sizes for better usability on smaller screens.
+
+12. Scripts
+- JavaScript Functions
+  - Handle interactions such as toggling dark mode, searching for weather, switching views, and updating weather displays.
+
+13. APIs
+- Weather API
+  - Fetches real-time weather data based on the user’s location.
+  - Provides current weather conditions, hourly and daily forecasts.
+- Location API (if used)
+  - Provides location information based on user input or IP address.
+
+14. Database
+- MySQL3 Database
+  - Stores user preferences and search history.
+  - Schema includes tables for storing locations, user settings, and cached weather data.
+  - Provides functionality to save and retrieve user data for a personalized experience.
+
+15. Integration
+- Backend
+  - Connects to the MySQL3 database to fetch and store data.
+  - Handles API requests and responses to and from the Weather API.
+- Frontend
+  - Interacts with the backend to display data fetched from APIs and database.
+  - Updates the UI based on user interactions and data received from APIs and the database.

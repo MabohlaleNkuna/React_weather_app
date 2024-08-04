@@ -1,0 +1,159 @@
+Weather App Pseudocode
+
+1. Initial Setup
+   Load styles and scripts
+   Include external fonts from Google Fonts
+
+2. Body Structure
+   Create App Container
+     Set max width and center container
+
+3. Header Section
+   Define Header
+     Add Title
+     Add Dark Mode Toggle Button
+
+4. Search Bar
+   Define Search Bar
+     Create Input Field
+       Allow user to enter location
+     Create Search Button
+       On click
+         Call search function
+           If Input Field is not empty
+             Call fetchWeatherData with Input Field value
+           End If
+       End
+
+5. View Switch
+   Define View Switch
+     Create Hourly View Button
+       On click
+         Switch to hourly weather forecasts
+       End
+     Create Daily View Button
+       On click
+         Switch to daily weather forecasts
+       End
+     End
+
+6. Weather Display
+   Define Weather Display
+     Add Weather Icon
+       Display icon representing current weather
+     Add Temperature Display
+       Show current temperature
+     Add Weather Description
+       Display description of current weather
+     End
+
+7. Forecast Section
+   Define Forecast Section
+     Create Forecast Items
+       Display forecast information in a grid
+       Show icons and temperatures for upcoming hours or days
+     End
+
+8. Location Popup
+   Define Location Popup
+     Create Popup Window
+       Show popup for location selection or confirmation
+     Create Popup Buttons
+       Add Confirm Button
+         On click
+           Confirm location selection
+         End
+       Add Cancel Button
+         On click
+           Close popup without action
+         End
+       End
+     End
+
+9. Alert Button
+   Define Weather Alert Button
+     On click
+       Trigger alerts for severe weather conditions
+     End
+
+10. Dark Mode Styling
+    Define Dark Mode Styles
+      Change background and text colors for dark mode
+      Adjust button styles and hover effects for dark mode
+    End
+
+11. Responsiveness
+    Define Responsive Styles
+      If screen width is below 430px
+        Adjust font sizes, padding, and image sizes
+      End If
+    End
+
+12. Scripts
+    Define JavaScript Functions
+      Function toggleDarkMode
+        Toggle between light and dark mode
+      End
+
+      Function fetchWeatherData(query)
+        Fetch real-time weather data using Weather API
+        If API call is successful
+          Update Weather Display with fetched data
+        End If
+      End
+
+      Function handleSearch
+        Call fetchWeatherData with search query
+      End
+
+      Function switchView(viewType)
+        Switch display to hourly or daily forecast
+      End
+
+      Function showLocationPopup
+        Display popup for location selection
+      End
+
+      Function hideLocationPopup
+        Hide location popup
+      End
+
+      Function showWeatherAlert
+        Trigger weather alerts
+      End
+    End
+
+13. APIs
+    Define Weather API Integration
+      Fetch real-time weather data based on location
+      Provide current weather conditions, hourly, and daily forecasts
+    End
+
+    Define Location API Integration (if used)
+      Provide location information based on user input or IP address
+    End
+
+14. Database
+    Define MySQL3 Database Setup
+      Create tables for:
+        User preferences
+        Search history
+        Locations
+        User settings
+        Cached weather data
+      Implement functionality to save and retrieve user data
+    End
+
+15. Integration
+    Define Backend Integration
+      Connect to MySQL3 database
+        Fetch and store data
+      Handle API requests and responses
+    End
+
+    Define Frontend Integration
+      Interact with backend
+        Display data fetched from APIs and database
+        Update UI based on user interactions and data received
+    End
+
