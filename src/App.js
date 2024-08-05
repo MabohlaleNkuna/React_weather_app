@@ -20,6 +20,45 @@ const App = () => {
   const [popupMessage, setPopupMessage] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // Load data from localStorage
+  useEffect(() => {
+    const loc = localStorage.getItem("location");
+    const deg = localStorage.getItem("degree");
+    const fore = localStorage.getItem("forecast");
+    const main = localStorage.getItem("main");
+    const img = localStorage.getItem("img");
+    const humidity = localStorage.getItem("humidity");
+    const windSpeed = localStorage.getItem("windSpeed");
+    const unit = localStorage.getItem("unit");
+    const viewType = localStorage.getItem("viewType");
+    const darkMode = localStorage.getItem("isDarkMode") === 'true';
+
+    if (loc) setLocation(loc);
+    if (deg) setDegree(deg);
+    if (fore) setForecast(JSON.parse(fore));
+    if (main) setMain(main);
+    if (img) setImg(img);
+    if (humidity) setHumidity(humidity);
+    if (windSpeed) setWindSpeed(windSpeed);
+    if (unit) setUnit(unit);
+    if (viewType) setViewType(viewType);
+    setIsDarkMode(darkMode);
+  }, []);
+
+  // Save data to localStorage
+  useEffect(() => {
+    localStorage.setItem("location", location);
+    localStorage.setItem("degree", degree);
+    localStorage.setItem("forecast", JSON.stringify(forecast));
+    localStorage.setItem("main", main);
+    localStorage.setItem("img", img);
+    localStorage.setItem("humidity", humidity);
+    localStorage.setItem("windSpeed", windSpeed);
+    localStorage.setItem("unit", unit);
+    localStorage.setItem("viewType", viewType);
+    localStorage.setItem("isDarkMode", isDarkMode);
+  }, [location, degree, forecast, main, img, humidity, windSpeed, unit, viewType, isDarkMode]);
+
   const temperatureConverter = (temp, unit) => {
     return unit === 'imperial' ? Math.round(temp * 9 / 5 + 32) : Math.round(temp);
   };
@@ -87,14 +126,12 @@ const App = () => {
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log('Geolocation access granted');
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
           url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=b8a29f5c70c06239c55aedb78e5614f0&units=${unit}`;
           axios.get(url).then(res => handleWeatherResponse(res));
         },
         (error) => {
-          console.error('Geolocation access denied or error:', error);
           if (error.code === error.PERMISSION_DENIED) {
             setPopupMessage('Location access is required. Please allow access or enter a location manually.');
             setShowLocationPopup(true);
@@ -109,27 +146,7 @@ const App = () => {
   }, [unit, handleWeatherResponse]);
 
   useEffect(() => {
-    const requestUserLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          () => {
-            fetchWeatherData();
-          },
-          (error) => {
-            if (error.code === error.PERMISSION_DENIED) {
-              setPopupMessage('Location access is required. Please allow access or enter a location manually.');
-              setShowLocationPopup(true);
-            } else {
-              alert('Unable to access location. Please ensure location services are enabled.');
-            }
-          }
-        );
-      } else {
-        console.log('Geolocation is not supported by this browser.');
-      }
-    };
-
-    requestUserLocation();
+    fetchWeatherData();
   }, [fetchWeatherData]);
 
   const handlePopupConfirm = () => {
@@ -187,7 +204,7 @@ const App = () => {
         <div className="location-popup">
           <p>{popupMessage}</p>
           <button onClick={handlePopupConfirm}>Allow</button>
-          <button onClick={handlePopupDeny}>Enter Location Manually</button>
+          <button onClick={handlePopupDeny}>Deny</button>
         </div>
       )}
     </div>
