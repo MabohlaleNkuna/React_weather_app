@@ -9,7 +9,7 @@ class Header extends React.Component {
     return (
       <header className="app-header">
     
-        <h1 className="app-title">Weather App</h1>
+        <h1 className="app-title">Mabohlale's Weather App</h1>
         <p className="app-intro">Current weather at</p>
         <h2>{this.props.location} </h2>
      

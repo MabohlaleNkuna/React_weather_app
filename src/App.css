@@ -234,9 +234,29 @@ body {
   background: #333;
   color: #ffffff;
 }
+.dark-mode .app-header h1{
+  color: #2ab8fa;
+}
+.dark-mode .app-header h2{
+  color: #2ab8fa;
+}
 
+.dark-mode .header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #2ab8fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+.dark-mode .forecast-item .hour {
+  color: #2ab8fa;
+  font-size: 1rem;
+}
+.dark-mode .forecast-item .temp {
+  color: #2ab8fa;
+  font-size: 1rem;
+}
 .dark-mode .search-bar button {
-  background: linear-gradient(to bottom, #007bff, #0056b3);
+  background: linear-gradient(to bottom, #007bff, #2c5bf5);
   color: #ffffff;
 }
 
