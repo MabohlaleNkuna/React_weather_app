@@ -11,14 +11,15 @@ const App = () => {
   const [forecast, setForecast] = useState([]);
   const [main, setMain] = useState('');
   const [img, setImg] = useState('');
-  const [humidity, setHumidity] = useState(''); 
-  const [windSpeed, setWindSpeed] = useState(''); 
+  const [humidity, setHumidity] = useState('');
+  const [windSpeed, setWindSpeed] = useState('');
   const [unit, setUnit] = useState('metric');
   const [viewType, setViewType] = useState('daily');
   const [searchQuery, setSearchQuery] = useState('');
   const [showLocationPopup, setShowLocationPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [savedLocations, setSavedLocations] = useState([]);
 
   // Load data from localStorage
   useEffect(() => {
@@ -32,6 +33,7 @@ const App = () => {
     const unit = localStorage.getItem("unit");
     const viewType = localStorage.getItem("viewType");
     const darkMode = localStorage.getItem("isDarkMode") === 'true';
+    const savedLocs = JSON.parse(localStorage.getItem("savedLocations")) || [];
 
     if (loc) setLocation(loc);
     if (deg) setDegree(deg);
@@ -43,6 +45,7 @@ const App = () => {
     if (unit) setUnit(unit);
     if (viewType) setViewType(viewType);
     setIsDarkMode(darkMode);
+    setSavedLocations(savedLocs);
   }, []);
 
   // Save data to localStorage
@@ -57,7 +60,8 @@ const App = () => {
     localStorage.setItem("unit", unit);
     localStorage.setItem("viewType", viewType);
     localStorage.setItem("isDarkMode", isDarkMode);
-  }, [location, degree, forecast, main, img, humidity, windSpeed, unit, viewType, isDarkMode]);
+    localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
+  }, [location, degree, forecast, main, img, humidity, windSpeed, unit, viewType, isDarkMode, savedLocations]);
 
   const temperatureConverter = (temp, unit) => {
     return unit === 'imperial' ? Math.round(temp * 9 / 5 + 32) : Math.round(temp);
@@ -73,7 +77,7 @@ const App = () => {
     setMain(data.weather[0].main);
     setImg(imgSource);
     setHumidity(data.main.humidity);
-    setWindSpeed(data.wind.speed); 
+    setWindSpeed(data.wind.speed);
 
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?appid=b8a29f5c70c06239c55aedb78e5614f0&units=${unit}&q=${data.name}`;
     axios.get(forecastUrl).then(res => {
@@ -165,6 +169,18 @@ const App = () => {
     fetchWeatherData(searchQuery);
   };
 
+  const handleSaveLocation = () => {
+    setSavedLocations(prev => [...prev, location]);
+  };
+
+  const handleViewSavedLocations = () => {
+    alert(`Saved locations: ${savedLocations.join(', ')}`);
+  };
+
+  const handleToggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
   return (
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
       <Header location={location} reloadApp={() => fetchWeatherData()} />
@@ -185,26 +201,33 @@ const App = () => {
         <button onClick={() => setUnit(unit === 'metric' ? 'imperial' : 'metric')}>
           {unit === 'metric' ? '°C' : '°F'}
         </button>
-        <button onClick={() => setIsDarkMode(!isDarkMode)}>
+        <button onClick={handleToggleDarkMode}>
           {isDarkMode ? 'Light Mode' : 'Dark Mode'}
         </button>
       </div>
       <WeatherDisplay
         degree={degree}
         main={main}
-        forecast={forecast}
         img={img}
-        humidity={humidity} 
-        windSpeed={windSpeed} 
+        humidity={humidity}
+        windSpeed={windSpeed}
+        forecast={forecast}
         viewType={viewType}
-        unit={unit}
       />
       <SMSRegistration />
+
+      {/* New Buttons */}
+      <div className="buttons">
+        <button onClick={handleSaveLocation}>Save Location</button>
+        <button onClick={handleViewSavedLocations}>View Saved Locations</button>
+      </div>
+
+      {/* Popup for location access */}
       {showLocationPopup && (
-        <div className="location-popup">
+        <div className="popup">
           <p>{popupMessage}</p>
           <button onClick={handlePopupConfirm}>Allow</button>
-          <button onClick={handlePopupDeny}>Deny</button>
+          <button onClick={handlePopupDeny}>Cancel</button>
         </div>
       )}
     </div>
