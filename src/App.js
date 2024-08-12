@@ -21,8 +21,8 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [savedLocations, setSavedLocations] = useState([]);
 
-  // Load data from localStorage
   useEffect(() => {
+    // Load saved data from local storage
     const loc = localStorage.getItem("location");
     const deg = localStorage.getItem("degree");
     const fore = localStorage.getItem("forecast");
@@ -33,7 +33,8 @@ const App = () => {
     const unit = localStorage.getItem("unit");
     const viewType = localStorage.getItem("viewType");
     const darkMode = localStorage.getItem("isDarkMode") === 'true';
-    const savedLocs = JSON.parse(localStorage.getItem("savedLocations")) || [];
+    const savedLocs = localStorage.getItem("savedLocations");
+    //const savedLocationsArray = savedLocs ? savedLocs.split(',') : [];
 
     if (loc) setLocation(loc);
     if (deg) setDegree(deg);
@@ -45,11 +46,11 @@ const App = () => {
     if (unit) setUnit(unit);
     if (viewType) setViewType(viewType);
     setIsDarkMode(darkMode);
-    setSavedLocations(savedLocs);
+    if (savedLocs) setSavedLocations(savedLocs);
   }, []);
 
-  // Save data to localStorage
   useEffect(() => {
+    // Save data to local storage whenever any state changes
     localStorage.setItem("location", location);
     localStorage.setItem("degree", degree);
     localStorage.setItem("forecast", JSON.stringify(forecast));
@@ -60,7 +61,9 @@ const App = () => {
     localStorage.setItem("unit", unit);
     localStorage.setItem("viewType", viewType);
     localStorage.setItem("isDarkMode", isDarkMode);
-    localStorage.setItem("savedLocations", JSON.stringify(savedLocations));
+
+    // Save saved locations as a comma-separated string
+    localStorage.setItem("savedLocations", savedLocations);
   }, [location, degree, forecast, main, img, humidity, windSpeed, unit, viewType, isDarkMode, savedLocations]);
 
   const temperatureConverter = (temp, unit) => {
@@ -68,33 +71,27 @@ const App = () => {
   };
 
   const handleWeatherResponse = useCallback((res) => {
-    console.log('Weather API Response:', res.data);
-  
     const data = res.data;
     if (!data.current) {
-      console.error('Unexpected response format:', data);
       return;
     }
-  
+
     const temp = temperatureConverter(data.current.temp_c, unit);
     const imgSource = data.current.condition.icon;
-  
+
     setLocation(`${data.location.name}, ${data.location.country}`);
     setDegree(temp);
     setMain(data.current.condition.text);
     setImg(imgSource);
     setHumidity(data.current.humidity);
     setWindSpeed(data.current.wind_kph);
-  
+
     const forecastUrl = `https://api.weatherapi.com/v1/forecast.json?key=dd64f007451b4300b1381555240208&q=${data.location.name}&days=7&aqi=no&alerts=no`;
     axios.get(forecastUrl).then(res => {
-      console.log('Forecast API Response:', res.data);
-  
       if (!res.data.forecast || !res.data.forecast.forecastday) {
-        console.error('Unexpected forecast format:', res.data);
         return;
       }
-  
+
       let weatherList = [];
       res.data.forecast.forecastday.forEach((day) => {
         day.hour.forEach((hourData) => {
@@ -103,7 +100,7 @@ const App = () => {
             const temp = temperatureConverter(hourData.temp_c, unit);
             const description = hourData.condition.text;
             const img = hourData.condition.icon;
-  
+
             weatherList.push({ hour, temp, description, img });
           }
         });
@@ -114,7 +111,7 @@ const App = () => {
 
   const fetchWeatherData = useCallback((query = '') => {
     let url;
-  
+
     if (query) {
       url = `https://api.weatherapi.com/v1/current.json?key=dd64f007451b4300b1381555240208&q=${query}`;
       axios.get(url).then(res => handleWeatherResponse(res));
@@ -161,11 +158,15 @@ const App = () => {
   };
 
   const handleSaveLocation = () => {
-    setSavedLocations(prev => [...prev, location]);
+    setSavedLocations(prev => {
+      const updatedLocations = [...prev, location];
+      //localStorage.setItem("savedLocations", updatedLocations.join(','));
+      return updatedLocations;
+    });
   };
 
   const handleViewSavedLocations = () => {
-    alert(`Saved locations: ${savedLocations.join(', ')}`);
+    alert(`Saved locations: ${savedLocations}`);
   };
 
   const handleToggleDarkMode = () => {
@@ -217,7 +218,7 @@ const App = () => {
         <div className="popup">
           <p>{popupMessage}</p>
           <button onClick={handlePopupConfirm}>Allow</button>
-          <button onClick={handlePopupDeny}>Cancel</button>
+          <button onClick={handlePopupDeny}>Deny</button>
         </div>
       )}
     </div>

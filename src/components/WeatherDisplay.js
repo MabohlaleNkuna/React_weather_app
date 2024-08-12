@@ -22,7 +22,7 @@ const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, view
       return dailyForecasts.map((item, index) => (
         <ForecastItem
           key={index}
-          day={getDayName(item.date)}
+          day={days[index]}
           temp={item.temp}
           description={item.description}
           img={item.img}
