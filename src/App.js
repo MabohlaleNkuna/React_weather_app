@@ -68,54 +68,45 @@ const App = () => {
   };
 
   const handleWeatherResponse = useCallback((res) => {
+    console.log('Weather API Response:', res.data);
+  
     const data = res.data;
-    const temp = temperatureConverter(data.main.temp, unit);
-    const imgSource = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
-
-    setLocation(`${data.name}, ${data.sys.country}`);
+    if (!data.current) {
+      console.error('Unexpected response format:', data);
+      return;
+    }
+  
+    const temp = temperatureConverter(data.current.temp_c, unit);
+    const imgSource = data.current.condition.icon;
+  
+    setLocation(`${data.location.name}, ${data.location.country}`);
     setDegree(temp);
-    setMain(data.weather[0].main);
+    setMain(data.current.condition.text);
     setImg(imgSource);
-    setHumidity(data.main.humidity);
-    setWindSpeed(data.wind.speed);
-
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?appid=b8a29f5c70c06239c55aedb78e5614f0&units=${unit}&q=${data.name}`;
+    setHumidity(data.current.humidity);
+    setWindSpeed(data.current.wind_kph);
+  
+    const forecastUrl = `https://api.weatherapi.com/v1/forecast.json?key=dd64f007451b4300b1381555240208&q=${data.location.name}&days=7&aqi=no&alerts=no`;
     axios.get(forecastUrl).then(res => {
+      console.log('Forecast API Response:', res.data);
+  
+      if (!res.data.forecast || !res.data.forecast.forecastday) {
+        console.error('Unexpected forecast format:', res.data);
+        return;
+      }
+  
       let weatherList = [];
-      res.data.list.forEach((obj) => {
-        let utc = obj.dt;
-        let d = new Date(0);
-        d.setUTCSeconds(utc);
-        let hour = d.getHours();
-        hour = hour < 13 ? `${hour} AM` : `${hour - 12} PM`;
-        const temp = temperatureConverter(obj.main.temp, unit);
-        const description = obj.weather[0].main;
-        const prefix = 'https://res.cloudinary.com/marvel451/image/upload/';
-        let weatherIcons = [
-          'v1525070596/sunny.svg',
-          'v1525070599/cloud-one_iiddgh.svg',
-          'v1525070596/cloud-three_isrrou.svg',
-          'v1525070596/thunder_hw7uyx.svg',
-          'v1525140183/snowy.svg',
-          'v1525070596/slightly-cloudy-day_ljjffu.svg',
-          'v1525070596/slightly-cloudy-night_xchkwe.svg'
-        ];
-
-        let img = null;
-
-        switch(description) {
-          case "clear sky": img = `${prefix + weatherIcons[0]}`; break;
-          case "rain": img = `${prefix + weatherIcons[1]}`; break;
-          case "shower rain": img = `${prefix + weatherIcons[2]}`; break;
-          case "thunderstorm": img = `${prefix + weatherIcons[3]}`; break;
-          case "snow": img = `${prefix + weatherIcons[4]}`; break;
-          case "clouds":
-          case "scattered clouds":
-          case "few clouds": img = `${prefix + weatherIcons[5]}`; break;
-          default: img = `${prefix + weatherIcons[6]}`; break;
-        }
-
-        weatherList.push({ hour, temp, description, img });
+      res.data.forecast.forecastday.forEach((day) => {
+        day.hour.forEach((hourData) => {
+          if (hourData) {
+            let hour = new Date(hourData.time_epoch * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const temp = temperatureConverter(hourData.temp_c, unit);
+            const description = hourData.condition.text;
+            const img = hourData.condition.icon;
+  
+            weatherList.push({ hour, temp, description, img });
+          }
+        });
       });
       setForecast(weatherList);
     });
@@ -123,16 +114,16 @@ const App = () => {
 
   const fetchWeatherData = useCallback((query = '') => {
     let url;
-
+  
     if (query) {
-      url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=b8a29f5c70c06239c55aedb78e5614f0&units=${unit}`;
+      url = `https://api.weatherapi.com/v1/current.json?key=dd64f007451b4300b1381555240208&q=${query}`;
       axios.get(url).then(res => handleWeatherResponse(res));
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=b8a29f5c70c06239c55aedb78e5614f0&units=${unit}`;
+          url = `https://api.weatherapi.com/v1/current.json?key=dd64f007451b4300b1381555240208&q=${latitude},${longitude}`;
           axios.get(url).then(res => handleWeatherResponse(res));
         },
         (error) => {
@@ -213,16 +204,15 @@ const App = () => {
         windSpeed={windSpeed}
         forecast={forecast}
         viewType={viewType}
+        unit={unit}
       />
       <SMSRegistration />
 
-      {/* New Buttons */}
       <div className="buttons">
         <button onClick={handleSaveLocation}>Save Location</button>
         <button onClick={handleViewSavedLocations}>View Saved Locations</button>
       </div>
 
-      {/* Popup for location access */}
       {showLocationPopup && (
         <div className="popup">
           <p>{popupMessage}</p>
