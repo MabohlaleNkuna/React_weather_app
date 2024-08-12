@@ -18,17 +18,29 @@ const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, view
 
   const displayForecast = (forecast) => {
     if (viewType === 'daily') {
-      const dailyForecasts = forecast.slice(0, 7);
+      const today = new Date();
+      const dailyForecasts = forecast.slice(0, 7).map((item, index) => {
+        const forecastDate = new Date(today);
+        forecastDate.setDate(today.getDate() + index);
+        const dayName = days[forecastDate.getDay()];
+
+        return {
+          ...item,
+          day: dayName
+        };
+      });
+
       return dailyForecasts.map((item, index) => (
         <ForecastItem
           key={index}
-          day={days[index]}
+          day={item.day}
           temp={item.temp}
           description={item.description}
           img={item.img}
         />
       ));
     }
+    
     const hourlyForecasts = forecast.slice(0, 12);
     return hourlyForecasts.map((item, index) => (
       <ForecastItem
@@ -50,7 +62,8 @@ const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, view
           {degree}°{unit === 'metric' ? 'C' : 'F'}
         </div>
         <div className="humidity">Humidity: {humidity}%</div>
-        <div className="wind-speed">Wind Speed: {windSpeed} {unit === 'metric' ? 'm/s' : 'mph'}</div>
+        <div className="wind-speed">Wind Speed: {windSpeed} {unit === 'metric' ? 'm/s' : 'mph'}
+        </div>
       </div>
       <div className="date">{getCurrentDate()}</div>
       <div className="forecast">
