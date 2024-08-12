@@ -1,15 +1,21 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
+  background: url('./assets/LIGHT.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: #333;
+}
+
+.dark-mode {
+  background: url('./assets/DARK.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #ffffff;
 }
 
 .app {
   max-width: 1200px;
   margin: auto;
   padding: 20px;
-  background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -223,10 +229,6 @@ body {
   background: linear-gradient(to bottom, #007bff, #0056b3);
 }
 
-.dark-mode {
-  background: linear-gradient(to bottom, #000000, #333333);
-  color: #ffffff;
-}
 
 .dark-mode .app {
   background: #1e1e1e;
@@ -243,7 +245,7 @@ body {
   color: #ffffff;
 }
 .dark-mode .app-header h1{
-  color: #2ab8fa;
+  color: #06aefc;
 }
 .dark-mode .app-header h2{
   color: #2ab8fa;
@@ -261,23 +263,25 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
 }
-
+.dark-mode .forecast-item .day-name {
+  color: rgba(248, 172, 9, 0.9);
+}
 .dark-mode .forecast-item .hour {
-  color: rgba(42, 184, 250, 0.9);
-  font-size: 1rem;
+  color: rgba(64, 218, 245, 0.9);
 }
 
+
 .dark-mode .forecast-item .temperature {
-  color: rgba(244, 197, 97, 0.9);
-  font-size: 1rem;
+  color: rgba(248, 172, 9, 0.9);
 }
 
 .dark-mode .forecast-item .description {
-  color: rgba(255, 255, 255, 0.8);
+  color: white;
 }
 
+
 .dark-mode .search-bar button:hover {
-  background: linear-gradient(to bottom, #033a75, #002a60);
+  background: linear-gradient(to bottom, #3575bb, #73a8ee);
 }
 
 .dark-mode .view-switch button {
@@ -370,7 +374,11 @@ body {
 .buttons button:active {
   background-color: #002a6a;
 }
-
+.dark-mode .weather-display .degree {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #49d1fa;
+}
 
 @media (max-width: 430px) {
   .header button {
