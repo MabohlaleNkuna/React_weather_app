@@ -1,45 +1,37 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: url('./assets/LIGHT.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #333;
+  background: linear-gradient(to right, #ffffff, #f0f0f0, #d0d0d0);
+  
 }
 
 body .dark-mode {
-  background:black;
+  background:linear-gradient(to right, #101010, #000000);
   color: #ffffff;
 }
 
 .app {
-  max-width: 1200px;
   margin: auto;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
   height: 100%vh;
 }
 
-.header {
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 50px;
+  height: 100%;
 }
 
-.app-header h1{
+.app-header h1 {
   color: #004AAD;
-  font-size: 4.5rem;
+  font-size: 3rem;
+  margin: 0;
+  text-shadow: 2px 2px #FF0000;
 }
-.app-header h2{
-  color: #004AAD;
-}
-.app-header p{
-  color: #ecf4fe;
-  font-weight: bold;
-}
+
 .header h1 {
   margin: 0;
   font-size: 2.5rem;
@@ -115,7 +107,7 @@ body .dark-mode {
 }
 
 .view-switch button:hover {
-  background-color: #e3a94c;
+  background-color: #FF0000;
 }
 
 .weather-display {
@@ -131,11 +123,11 @@ body .dark-mode {
 .weather-display .degree {
   font-size: 7rem;
   font-weight: bold;
-  color: #004AAD;
+  color:  #FF0000;
 }
 
 .weather-display h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: #004AAD;
 }
 
@@ -150,12 +142,12 @@ body .dark-mode {
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background: #f4f4f4;
+  background: transparent;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin: 15px;
   max-width: 180px;
-  width: 110px;
+  width: 130px;
   text-align: center;
   margin-top: 20px;
  
@@ -167,23 +159,28 @@ body .dark-mode {
   font-weight: 600;
   color: #004AAD;
 }
+.forecast-item .hour {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #004AAD;
+}
 
 .forecast-item .temperature {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #F4C561;
-  margin: 3px 0;
+  color:  #FF0000;
+  margin-top: 1px;
 }
 
 .forecast-item .description {
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.3rem;
+  color:#004AAD;
 }
 
 .forecast-item .forecast-icon {
-  width: 150px;
-  height: 100px;
-  margin: 2px 0;
+  width: 170px;
+  height: 90px;
+  margin: 3px 0;
 }
 .location-popup {
   position: fixed;
@@ -208,7 +205,7 @@ body .dark-mode {
   padding: 12px 24px;
   font-size: 16px;
   cursor: pointer;
-  background: linear-gradient(to bottom, #F4C561, #e3a94c);
+  background: #FF0000;
   color: #241D10;
   border: none;
   border-radius: 6px;
@@ -217,14 +214,14 @@ body .dark-mode {
 }
 
 .location-popup button:hover {
-  background: linear-gradient(to bottom, #e3a94c, #c28a3c);
+  background: #FF0000;
 }
 
 .get-alert-button {
   padding: 12px 24px;
   font-size: 20px;
   border: none;
-  background: linear-gradient(to bottom, #F4C561, #e3a94c);
+  background:  #FF0000;
   color: #241D10;
   border-radius: 6px;
   cursor: pointer;
@@ -271,7 +268,7 @@ body .dark-mode {
   border-radius: 8px;
 }
 .dark-mode .forecast-item .day-name {
-  color: rgba(248, 172, 9, 0.9);
+  color: #FF0000;
 }
 .dark-mode .forecast-item .hour {
   color: rgba(64, 218, 245, 0.9);
@@ -279,7 +276,7 @@ body .dark-mode {
 
 
 .dark-mode .forecast-item .temperature {
-  color: rgba(248, 172, 9, 0.9);
+  color: #FF0000;
 }
 
 .dark-mode .forecast-item .description {
@@ -296,7 +293,7 @@ body .dark-mode {
   color: white;
 }
 .dark-mode .view-switch button:hover {
-  background-color: #e3a94c;;
+  background-color: #FF0000;
   color: white;
 }
 .dark-mode .weather-display {
@@ -311,10 +308,6 @@ body .dark-mode {
 .dark-mode .location-popup button {
   background: linear-gradient(to bottom, #007bff, #0056b3);
   color: #ffffff;
-}
-
-.dark-mode .forecast-item img {
-  filter: brightness(0) invert(1);
 }
 
 .dark-mode .get-alert-button:hover {
@@ -384,7 +377,7 @@ body .dark-mode {
 .dark-mode .weather-display .degree {
   font-size: 8rem;
   font-weight: bold;
-  color: #49d1fa;
+  color: #FF0000;
 }
 
 @media (max-width: 430px) {

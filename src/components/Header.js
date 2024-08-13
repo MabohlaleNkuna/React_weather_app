@@ -8,11 +8,7 @@ class Header extends React.Component {
   render() {
     return (
       <header className="app-header">
-    
-        <h1 className="app-title">Weather App</h1>
-        <p className="app-intro">Current weather at</p>
-        <h2>{this.props.location} </h2>
-     
+        <h1>{this.props.location}</h1>
       </header>
     );
   }

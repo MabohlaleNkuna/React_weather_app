@@ -56,14 +56,15 @@ const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, view
   return (
     <div className="weather-display">
       <h2>{main}</h2>
-      <img src={img} alt={main} />
-      <div className="current-conditions">
+      <div className="degree-image-container">
+        <img src={img} alt={main} className="weather-icon" />
         <div className="degree">
           {degree}°{unit === 'metric' ? 'C' : 'F'}
         </div>
+      </div>
+      <div className="current-conditions">
         <div className="humidity">Humidity: {humidity}%</div>
-        <div className="wind-speed">Wind Speed: {windSpeed} {unit === 'metric' ? 'm/s' : 'mph'}
-        </div>
+        <div className="wind-speed">Wind Speed: {windSpeed} {unit === 'metric' ? 'm/s' : 'mph'}</div>
       </div>
       <div className="date">{getCurrentDate()}</div>
       <div className="forecast">
