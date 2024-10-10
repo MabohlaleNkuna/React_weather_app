@@ -29,5 +29,5 @@ The Weather App is a user-friendly application that provides real-time weather i
 ## Setup Instructions
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/weather-app.git
+   git clone https://github.com/MabohlaleNkuna/weather-app.git
    cd weather-app
