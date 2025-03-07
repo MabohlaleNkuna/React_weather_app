@@ -108,7 +108,7 @@ const App = () => {
       });
       setForecast(weatherList);
     });
-  }, [unit]);
+  }, []);
 
   const fetchWeatherData = useCallback((query = '') => {
     let url;

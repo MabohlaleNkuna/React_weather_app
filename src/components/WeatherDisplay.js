@@ -1,8 +1,8 @@
 import React from 'react'; 
 import ForecastItem from './ForecastItem';
-import { Card } from 'react-bootstrap'; // Importing Card from Bootstrap
+import { Card } from 'react-bootstrap'; 
 
-const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, viewType, unit }) => {
+const WeatherDisplay = ({ degree, humidity, windSpeed, forecast, img, viewType, unit }) => {
 
   const getCurrentDate = () => {
     const today = new Date();
@@ -12,10 +12,7 @@ const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, view
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const getDayName = (dateString) => {
-    const date = new Date(dateString);
-    return days[date.getDay()];
-  };
+ 
 
   const displayForecast = (forecast) => {
     if (viewType === 'daily') {
