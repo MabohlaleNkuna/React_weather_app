@@ -76,43 +76,44 @@ const App = () => {
     if (!data.current) {
       return;
     }
-
-    const temp = temperatureConverter(data.current.temp_c, unit);
+  
+    const temp = temperatureConverter(data.current.temp_c, unit);  // unit is used here
     const imgSource = data.current.condition.icon;
-
+  
     setLocation(`${data.location.name}, ${data.location.country}`);
     setDegree(temp);
     setMain(data.current.condition.text);
     setImg(imgSource);
     setHumidity(data.current.humidity);
     setWindSpeed(data.current.wind_kph);
-
+  
     const forecastUrl = `https://api.weatherapi.com/v1/forecast.json?key=dd64f007451b4300b1381555240208&q=${data.location.name}&days=7&aqi=no&alerts=no`;
     axios.get(forecastUrl).then(res => {
       if (!res.data.forecast || !res.data.forecast.forecastday) {
         return;
       }
-
+  
       let weatherList = [];
       res.data.forecast.forecastday.forEach((day) => {
         day.hour.forEach((hourData) => {
           if (hourData) {
             let hour = new Date(hourData.time_epoch * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const temp = temperatureConverter(hourData.temp_c, unit);
+            const temp = temperatureConverter(hourData.temp_c, unit);  // unit is used here
             const description = hourData.condition.text;
             const img = hourData.condition.icon;
-
+  
             weatherList.push({ hour, temp, description, img });
           }
         });
       });
       setForecast(weatherList);
     });
-  }, []);
+  }, [unit]);  
+  
 
   const fetchWeatherData = useCallback((query = '') => {
     let url;
-
+  
     if (query) {
       url = `https://api.weatherapi.com/v1/current.json?key=dd64f007451b4300b1381555240208&q=${query}`;
       axios.get(url).then(res => handleWeatherResponse(res));
@@ -136,7 +137,8 @@ const App = () => {
     } else {
       console.log('Geolocation is not supported by this browser.');
     }
-  }, [unit, handleWeatherResponse]);
+  }, [unit, handleWeatherResponse]); 
+  
 
   useEffect(() => {
     fetchWeatherData();
