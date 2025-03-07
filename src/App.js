@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from './components/Header';
 import WeatherDisplay from './components/WeatherDisplay';
 import SMSRegistration from './components/SMSRegistration';
+
 import './App.css';
 
 const App = () => {

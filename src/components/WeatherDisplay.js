@@ -1,5 +1,6 @@
-import React from 'react';
+import React from 'react'; 
 import ForecastItem from './ForecastItem';
+import { Card } from 'react-bootstrap'; // Importing Card from Bootstrap
 
 const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, viewType, unit }) => {
 
@@ -40,36 +41,32 @@ const WeatherDisplay = ({ degree, humidity, windSpeed, main, forecast, img, view
         />
       ));
     }
-    
-    const hourlyForecasts = forecast.slice(0, 12);
-    return hourlyForecasts.map((item, index) => (
-      <ForecastItem
-        key={index}
-        hour={item.hour}
-        temp={item.temp}
-        description={item.description}
-        img={item.img}
-      />
-    ));
   };
 
   return (
     <div className="weather-display">
-      <h2>{main}</h2>
-      <div className="degree-image-container">
-        <img src={img} alt={main} className="weather-icon" />
-        <div className="degree">
-          {degree}°{unit === 'metric' ? 'C' : 'F'}
-        </div>
-      </div>
-      <div className="current-conditions">
-        <div className="humidity">Humidity: {humidity}%</div>
-        <div className="wind-speed">Wind Speed: {windSpeed} {unit === 'metric' ? 'm/s' : 'mph'}</div>
-      </div>
-      <div className="date">{getCurrentDate()}</div>
-      <div className="forecast">
-        {displayForecast(forecast)}
-      </div>
+      {/* Bootstrap Card component */}
+      <Card className="text-white bg-transparent">
+        <Card.Body>
+          <Card.Title className="text-center">{getCurrentDate()}</Card.Title>
+
+          <div className="current-conditions d-flex justify-content-center align-items-center">
+            <div className="degree">
+              <h2>{degree}°{unit === 'metric' ? 'C' : 'F'}</h2>
+            </div>
+            <img src={img} alt="weather icon" className="ml-3" />
+          </div>
+
+          <div className="current text-center mt-3">
+            <p className="humidity">Humidity: {humidity}%</p>
+            <p className="wind-speed">Wind Speed: {windSpeed} km/h</p>
+          </div>
+
+          <div className="forecast">
+            {displayForecast(forecast)}
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

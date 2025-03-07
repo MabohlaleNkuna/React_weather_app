@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(to bottom, #7ceefd, #027fc7);
+  height:fit-content;
 
   
 }
@@ -117,18 +118,16 @@ body .dark-mode {
 }
 
 .weather-display img {
-  width: 200px;
-  height: 150px;
+  width: 250px;
+  height: 100px;
 }
 
 .weather-display .degree {
-  font-size: 7rem;
+  font-size: 5rem;
   font-weight: bold;
   color:  #ffffff;
 }
-
-.weather-display h2 {
-  font-size: 2.5rem;
+.weather-display h4 {
   color: #004AAD;
 }
 
@@ -138,11 +137,30 @@ body .dark-mode {
   justify-content: center;
 }
 
+.current {
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  font-size: 10px;
+  color:  #ffffff;
+}
+
+.humidity {
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.wind-speed {
+  margin-top: 5px; 
+  font-size: 15px;
+}
+
 .forecast-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
   background: transparent;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -150,7 +168,7 @@ body .dark-mode {
   max-width: 180px;
   width: 130px;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 10px;
  
 }
 
@@ -353,6 +371,7 @@ body .dark-mode {
 }
 .buttons {
   margin-top: 10px;
+
 }
 
 .buttons button {
@@ -386,7 +405,7 @@ body .dark-mode {
     padding: 8px 16px;
     font-size: 14px;
   }
-
+ 
   .view-switch button {
     padding: 8px 14px;
     font-size: 10px;
@@ -416,3 +435,104 @@ body .dark-mode {
     height: 50px;
   }
 }
+@media (max-width: 370px) {
+
+  .current-conditions h2{
+    font-size: 2rem !important;
+    color: palevioletred;
+   
+  }
+  .app-sms button.submit-button {
+    font-size: 12px; 
+    padding: 8px 16px; 
+  }
+  .buttons {
+    font-size: 12px; 
+    padding: 8px 16px; 
+  }
+}
+.weather-display .current-conditions {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  gap: 5px; 
+  font-size: 2.5rem;
+  margin-top: 10px;
+}
+
+.weather-display .current-conditions .degree {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.weather-display .current-conditions img {
+  width: 100px;
+  height: 100px;
+}
+.weather-display {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #004AAD;
+}
+
+.current-conditions img {
+  width: 50px;
+  height: 50px;
+}
+
+.degree h2 {
+  font-size: 3rem;
+  color: #004AAD;
+}
+
+.current p {
+  font-size: 1rem;
+  color: #241D10;
+}
+
+.forecast {
+  margin-top: 20px;
+}
+
+.card-body {
+  background: rgba(255, 255, 255, 0.082); 
+  border-radius: 10px;
+  width: 100%;
+  margin: auto;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+  
+} 
+.weather-display .card{
+  width: 80%;
+  margin: auto;
+  border: none;
+}
+.buttons {
+  width: 100%;
+  margin-top: 0px; 
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app-sms .form-inline {width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.app-sms p {
+  width: 100%;
+  color: white;
+  margin-top: 0; 
+  margin-bottom: 0px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+  
